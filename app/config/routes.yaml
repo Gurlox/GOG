@@ -1,3 +1,8 @@
-controllers:
-    resource: ../src/Controller/
+cart_controllers:
+    resource: ../src/Module/Cart/Infrastructure/API/Controller/
     type: attribute
+
+product_controllers:
+    resource: ../src/Module/Product/Infrastructure/API/Controller/
+    type: attribute
+
