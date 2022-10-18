@@ -1,6 +1,18 @@
 framework:
     messenger:
         failure_transport: failed
+        default_bus: messenger.bus.default
+        buses:
+            messenger.bus.default:
+                middleware:
+                    - dispatch_after_current_bus
+                    - validation
+
+            messenger.bus.command:
+                middleware:
+                    - dispatch_after_current_bus
+                    - validation
+                    - doctrine_transaction
 
         transports:
             # https://symfony.com/doc/current/messenger.html#transport-configuration
