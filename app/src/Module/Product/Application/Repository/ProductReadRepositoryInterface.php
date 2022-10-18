@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace App\Module\Product\Application\Repository;
 
-use App\Module\Product\Application\DTO\ProductReadDTO;
+use App\Module\SharedKernel\DTO\ProductReadDTO;
 use App\Module\SharedKernel\ValueObject\Paging;
 
 interface ProductReadRepositoryInterface
@@ -14,4 +14,9 @@ interface ProductReadRepositoryInterface
     public function getPaginatedList(Paging $paging): array;
 
     public function countAll(): int;
+
+    /**
+     * @return ProductReadDTO[]
+     */
+    public function getAllByIds(array $ids): array;
 }
