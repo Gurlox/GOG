@@ -35,4 +35,21 @@ class ProductTestCase extends WebTestCase implements FunctionalTestInterface
             '/api/products/' . $id,
         );
     }
+
+    protected function patchProductRequest(KernelBrowser $client, int $id, string $title, ?int $netPrice): array
+    {
+        $client->request(
+            Request::METHOD_PATCH,
+            '/api/products/' . $id,
+            [],
+            [],
+            ['CONTENT_TYPE' => 'application/json'],
+            json_encode([
+                'title' => $title,
+                'netPrice' => $netPrice,
+            ]),
+        );
+
+        return json_decode($client->getResponse()->getContent(), true);
+    }
 }

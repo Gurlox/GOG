@@ -11,8 +11,6 @@ class CreateProductCommand extends Command
     public function __construct(
         public readonly string $title,
         public readonly int $priceAmount,
-        public readonly string $currency,
-        public readonly int $taxRate,
     ) {
     }
 }

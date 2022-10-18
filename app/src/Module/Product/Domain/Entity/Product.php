@@ -7,6 +7,7 @@ namespace App\Module\Product\Domain\Entity;
 use App\Module\SharedKernel\ValueObject\Price;
 use Assert\Assert;
 use Doctrine\ORM\Mapping as ORM;
+use Money\Money;
 
 #[ORM\Entity]
 #[ORM\Table(name: 'products')]
@@ -36,10 +37,12 @@ class Product
         return $this->title;
     }
 
-    public function setTitle(string $title): void
+    public function setTitle(string $title): self
     {
         Assert::that($title)->betweenLength(1, 255);
         $this->title = $title;
+
+        return $this;
     }
 
     public function getPrice(): Price
@@ -47,9 +50,11 @@ class Product
         return $this->price;
     }
 
-    public function setPrice(Price $price): void
+    public function setPrice(Price $price): self
     {
         $this->price = $price;
+
+        return $this;
     }
 
     public function getId(): int
@@ -57,4 +62,13 @@ class Product
         return $this->id;
     }
 
+    public function updateNetAmount(int $amount): self
+    {
+        $this->price = new Price(
+            new Money($amount, $this->price->getNetPrice()->getCurrency()),
+            $this->price->getTaxRate(),
+        );
+
+        return $this;
+    }
 }

@@ -23,8 +23,8 @@ class CreateProductCommandHandler implements CommandHandler
         $product = new Product(
             $command->title,
             new Price(
-                new Money($command->priceAmount, new Currency($command->currency)),
-                $command->taxRate,
+                new Money($command->priceAmount, new Currency(Price::DEFAULT_CURRENCY)),
+                Price::DEFAULT_TAX_RATE,
             )
         );
 
