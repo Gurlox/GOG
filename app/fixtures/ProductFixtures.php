@@ -13,7 +13,7 @@ use Money\Money;
 
 class ProductFixtures extends Fixture
 {
-    public function load(ObjectManager $manager)
+    public function load(ObjectManager $manager): void
     {
         foreach ($this->getData() as $item) {
             $product = new Product(

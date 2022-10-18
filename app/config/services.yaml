@@ -17,11 +17,20 @@ services:
         resource: '../src/'
         exclude:
             - '../src/DependencyInjection/'
-            - '../src/Entity/'
+            - '../src/Module/Cart/Domain/Entity/'
+            - '../src/Module/Product/Domain/Entity/'
             - '../src/Kernel.php'
 
     # add more service definitions when explicit configuration is needed
     # please note that last definitions always *replace* previous ones
+
+    App\Module\Product\Infrastructure\API\Controller\:
+        resource: '../src/Module/Product/Infrastructure/API/Controller/'
+        tags: [ 'controller.service_arguments' ]
+
+    App\Module\Cart\Infrastructure\API\Controller\:
+        resource: '../src/Module/Cart/Infrastructure/API/Controller/'
+        tags: [ 'controller.service_arguments' ]
 
     _instanceof:
 
@@ -42,3 +51,7 @@ services:
     App\Core\Query\QueryBus:
         arguments:
             - '@messenger.bus.default'
+#
+    App\Fixtures\:
+        resource: '../fixtures'
+        tags: [ 'doctrine.fixture.orm' ]
