@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace App\Tests\Unit\Module\SharedKernel\ValueObject;
+namespace App\Tests\unit\Module\SharedKernel\ValueObject;
 
 use Assert\InvalidArgumentException;
 use Money\Currency;

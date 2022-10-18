@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace App\Core\DoctrineType;
+namespace App\Core\DoctrineTypes;
 
 use App\Module\SharedKernel\ValueObject\Price;
 use Doctrine\DBAL\Platforms\AbstractPlatform;

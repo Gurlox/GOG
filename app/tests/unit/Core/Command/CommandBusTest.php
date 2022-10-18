@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace App\Tests\Unit\Core\Command;
+namespace App\Tests\unit\Core\Command;
 
 use App\Core\Command\Command;
 use App\Core\Command\CommandBus;

@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace App\Tests\Unit\Core\Query;
+namespace App\Tests\unit\Core\Query;
 
 use App\Core\Query\Query;
 use App\Core\Query\QueryBus;

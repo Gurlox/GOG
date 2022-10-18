@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace App\Tests\Unit\Module\Product\Domain\Entity;
+namespace App\Tests\unit\Module\Product\Domain\Entity;
 
 use App\Module\Product\Domain\Entity\Product;
 use App\Module\SharedKernel\ValueObject\Price;
