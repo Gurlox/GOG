@@ -6,6 +6,7 @@ namespace App\Core\Command;
 
 use App\Core\AbstractBus;
 use Symfony\Component\Messenger\MessageBusInterface;
+use Symfony\Component\Messenger\Stamp\HandledStamp;
 use Throwable;
 
 class CommandBus extends AbstractBus
@@ -15,10 +16,10 @@ class CommandBus extends AbstractBus
     ) {
     }
 
-    public function handle(Command $command): void
+    public function handle(Command $command)
     {
         try {
-            $this->messageBus->dispatch($command);
+            return $this->messageBus->dispatch($command)->last(HandledStamp::class)->getResult();
         } catch (Throwable $exception) {
             $this->throwException($exception);
         }
