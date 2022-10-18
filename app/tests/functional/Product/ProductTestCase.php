@@ -4,14 +4,12 @@ declare(strict_types=1);
 
 namespace App\Tests\functional\Product;
 
-use App\Tests\functional\FunctionalTestInterface;
 use Symfony\Bundle\FrameworkBundle\KernelBrowser;
-use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 use Symfony\Component\HttpFoundation\Request;
 
-class ProductTestCase extends WebTestCase implements FunctionalTestInterface
+class ProductTestCase
 {
-    protected function createProductRequest(KernelBrowser $client, string $title, int $netPrice): array
+    public static function createProductRequest(KernelBrowser $client, string $title, int $netPrice): array
     {
         $client->request(
             Request::METHOD_POST,
@@ -28,7 +26,7 @@ class ProductTestCase extends WebTestCase implements FunctionalTestInterface
         return json_decode($client->getResponse()->getContent(), true);
     }
 
-    protected function deleteProductRequest(KernelBrowser $client, int $id): void
+    public static function deleteProductRequest(KernelBrowser $client, int $id): void
     {
         $client->request(
             Request::METHOD_DELETE,
@@ -36,7 +34,7 @@ class ProductTestCase extends WebTestCase implements FunctionalTestInterface
         );
     }
 
-    protected function patchProductRequest(KernelBrowser $client, int $id, string $title, ?int $netPrice): array
+    public static function patchProductRequest(KernelBrowser $client, int $id, string $title, ?int $netPrice): array
     {
         $client->request(
             Request::METHOD_PATCH,
@@ -53,7 +51,7 @@ class ProductTestCase extends WebTestCase implements FunctionalTestInterface
         return json_decode($client->getResponse()->getContent(), true);
     }
 
-    protected function getProductsListRequest(KernelBrowser $client, int $page, int $perPage): array
+    public static function getProductsListRequest(KernelBrowser $client, int $page, int $perPage): array
     {
         $client->request(
             Request::METHOD_GET,
