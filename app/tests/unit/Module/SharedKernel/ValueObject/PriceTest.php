@@ -43,4 +43,19 @@ class PriceTest extends TestCase
             [100000, -12],
         ];
     }
+
+    public function testCreateFromGrossPrice(): void
+    {
+        $result = Price::createFromGrossPrice(
+            new Money(24477, new Currency(Price::DEFAULT_CURRENCY)),
+            23
+        );
+        $this->assertEquals(19900, $result->getNetPrice()->getAmount());
+
+        $result = Price::createFromGrossPrice(
+            new Money(19900, new Currency(Price::DEFAULT_CURRENCY)),
+            23
+        );
+        $this->assertEquals(16179, $result->getNetPrice()->getAmount());
+    }
 }

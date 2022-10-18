@@ -10,6 +10,7 @@
         "beberlei/assert": "^3.3",
         "doctrine/annotations": "^1.0",
         "doctrine/doctrine-bundle": "^2.7",
+        "doctrine/doctrine-fixtures-bundle": "^3.4",
         "doctrine/doctrine-migrations-bundle": "^3.2",
         "doctrine/orm": "^2.13",
         "moneyphp/money": "^3.3",
@@ -86,6 +87,12 @@
         ],
         "post-update-cmd": [
             "@auto-scripts"
+        ],
+        "db-reset": [
+            "php bin/console d:d:d --force",
+            "php bin/console d:d:c",
+            "php bin/console d:s:u --force",
+            "php bin/console d:f:l -n"
         ]
     },
     "conflict": {

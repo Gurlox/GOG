@@ -65,4 +65,14 @@ class Price implements JsonSerializable
     {
         return json_encode($this->toArray());
     }
+
+    public static function createFromGrossPrice(Money $grossPrice, int $taxRate): self
+    {
+        $netAmount = (int) round($grossPrice->getAmount() / (1 + $taxRate / 100));
+
+        return new self(
+            new Money($netAmount, $grossPrice->getCurrency()),
+            $taxRate,
+        );
+    }
 }
