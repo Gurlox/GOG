@@ -5,8 +5,8 @@ declare(strict_types=1);
 namespace App\Module\Product\Application\Query\GetProductById;
 
 use App\Core\Query\QueryHandler;
-use App\Module\Product\Application\DTO\ProductReadDTO;
 use App\Module\Product\Application\Repository\ProductReadRepositoryInterface;
+use App\Module\SharedKernel\DTO\ProductReadDTO;
 
 class GetProductByIdQueryHandler implements QueryHandler
 {

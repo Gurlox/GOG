@@ -17,7 +17,7 @@ use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
-use App\Module\Product\Application\DTO\ProductReadDTO;
+use App\Module\SharedKernel\DTO\ProductReadDTO;
 use Nelmio\ApiDocBundle\Annotation\Model;
 use App\Module\Product\Application\DTO\ProductsListReadDTO;
 use OpenApi\Annotations as OA;

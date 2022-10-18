@@ -2,10 +2,9 @@
 
 declare(strict_types=1);
 
-namespace App\Module\Product\Application\DTO;
+namespace App\Module\SharedKernel\DTO;
 
 use App\Module\Product\Domain\Entity\Product;
-use App\Module\SharedKernel\DTO\PriceReadDTO;
 
 class ProductReadDTO
 {
