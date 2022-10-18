@@ -7,6 +7,7 @@ namespace App\Module\Product\Infrastructure\Persistance\Doctrine;
 use App\Module\Product\Application\DTO\ProductReadDTO;
 use App\Module\Product\Application\Repository\ProductReadRepositoryInterface;
 use App\Module\Product\Domain\Entity\Product;
+use App\Module\SharedKernel\ValueObject\Paging;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
@@ -29,5 +30,33 @@ class ProductDoctrineReadRepository extends ServiceEntityRepository implements P
         }
 
         return ProductReadDTO::createFromProduct($product);
+    }
+
+    public function getPaginatedList(Paging $paging): array
+    {
+        $products = $this->getEntityManager()->getRepository(Product::class)
+            ->createQueryBuilder('p')
+            ->select('p')
+            ->setFirstResult($paging->getOffset())
+            ->setMaxResults($paging->getLimit())
+            ->getQuery()
+            ->getResult();
+
+        $result = [];
+
+        foreach ($products as $product) {
+            $result[] = ProductReadDTO::createFromProduct($product);
+        }
+
+        return $result;
+    }
+
+    public function countAll(): int
+    {
+        return $this->getEntityManager()->getRepository(Product::class)
+            ->createQueryBuilder('p')
+            ->select('COUNT(p)')
+            ->getQuery()
+            ->getSingleScalarResult();
     }
 }

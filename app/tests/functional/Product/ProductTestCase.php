@@ -52,4 +52,18 @@ class ProductTestCase extends WebTestCase implements FunctionalTestInterface
 
         return json_decode($client->getResponse()->getContent(), true);
     }
+
+    protected function getProductsListRequest(KernelBrowser $client, int $page, int $perPage): array
+    {
+        $client->request(
+            Request::METHOD_GET,
+            '/api/products',
+            [
+                'page' => $page,
+                'perPage' => $perPage,
+            ],
+        );
+
+        return json_decode($client->getResponse()->getContent(), true);
+    }
 }

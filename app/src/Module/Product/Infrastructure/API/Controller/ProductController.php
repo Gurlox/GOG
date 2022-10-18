@@ -10,6 +10,7 @@ use App\Module\Product\Application\Command\CreateProduct\CreateProductCommand;
 use App\Module\Product\Application\Command\DeleteProduct\DeleteProductCommand;
 use App\Module\Product\Application\Command\UpdateProduct\UpdateProductCommand;
 use App\Module\Product\Application\Query\GetProductById\GetProductByIdQuery;
+use App\Module\Product\Application\Query\GetProductsList\GetProductsListQuery;
 use Assert\Assert;
 use Assert\InvalidArgumentException;
 use Symfony\Component\HttpFoundation\JsonResponse;
@@ -18,6 +19,7 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use App\Module\Product\Application\DTO\ProductReadDTO;
 use Nelmio\ApiDocBundle\Annotation\Model;
+use App\Module\Product\Application\DTO\ProductsListReadDTO;
 use OpenApi\Annotations as OA;
 
 #[Route('/api/products', name: 'products_')]
@@ -159,6 +161,49 @@ class ProductController
                 'product' => $this->queryBus->handle(new GetProductByIdQuery($id)),
             ],
             Response::HTTP_OK
+        );
+    }
+
+    #[Route('', name: 'get_products', methods: ['GET'])]
+    /**
+     * @OA\Parameter(
+     *     name="page",
+     *     in="query",
+     *     @OA\Schema(type="string")
+     * )
+     * @OA\Parameter(
+     *     name="perPage",
+     *     in="query",
+     *     @OA\Schema(type="string")
+     * )
+     *
+     * @OA\Response(
+     *     response=200,
+     *     description="OK",
+     *     @Model(type=ProductsListReadDTO::class)
+     * )
+     */
+    public function getList(Request $request): JsonResponse
+    {
+        $page = $request->query->get('page');
+        $perPage = $request->query->get('perPage');
+
+        try {
+            Assert::lazy()
+                ->that($page)->numeric()
+                ->that($perPage)->numeric()
+                ->verifyNow();
+        } catch (InvalidArgumentException $exception) {
+            return new JsonResponse(['message' => $exception->getMessage()], Response::HTTP_BAD_REQUEST);
+        }
+
+        return new JsonResponse(
+            $this->queryBus->handle(
+                new GetProductsListQuery(
+                    (int) $page,
+                    (int) $perPage,
+                )
+            )
         );
     }
 }
