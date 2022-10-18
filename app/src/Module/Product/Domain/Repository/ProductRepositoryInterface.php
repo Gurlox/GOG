@@ -10,5 +10,7 @@ interface ProductRepositoryInterface
 {
     public function save(Product $product): void;
 
-    public function getById(int $id): Product;
+    public function delete(Product $product): void;
+
+    public function findById(int $id): Product;
 }
