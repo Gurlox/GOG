@@ -9,4 +9,6 @@ use App\Module\Cart\Domain\Entity\Cart;
 interface CartRepositoryInterface
 {
     public function save(Cart $cart): void;
+
+    public function getById(int $id): Cart;
 }
