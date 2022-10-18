@@ -17,7 +17,7 @@ class Product
     #[ORM\Column]
     private int $id;
 
-    #[ORM\Column(length: 255)]
+    #[ORM\Column(length: 255, unique: true)]
     private string $title;
 
     #[ORM\Column(type: 'price')]
@@ -50,6 +50,11 @@ class Product
     public function setPrice(Price $price): void
     {
         $this->price = $price;
+    }
+
+    public function getId(): int
+    {
+        return $this->id;
     }
 
 }
