@@ -8,6 +8,7 @@ use Assert\Assert;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use InvalidArgumentException;
 
 #[ORM\Entity]
 #[ORM\Table(name: 'carts')]
@@ -18,7 +19,7 @@ class Cart
     #[ORM\Column]
     private int $id;
 
-    #[ORM\OneToMany(mappedBy: 'cart', targetEntity: CartProduct::class,  cascade: ['persist', 'remove'])]
+    #[ORM\OneToMany(mappedBy: 'cart', targetEntity: CartProduct::class,  cascade: ['persist', 'remove'], orphanRemoval: true)]
     /** @var Collection<CartProduct> */
     private Collection $products;
 
@@ -54,6 +55,19 @@ class Cart
         })->first();
 
         return !$cartProduct ? null : $cartProduct;
+    }
+
+    public function removeProduct(int $productId): self
+    {
+        $product = $this->getProductById($productId);
+
+        if (null === $product) {
+            throw new InvalidArgumentException(sprintf('Product with id %d doesn\'t exist in cart', $productId));
+        }
+
+        $this->products->removeElement($product);
+
+        return $this;
     }
 
     /**

@@ -44,4 +44,12 @@ class CartTestCase
 
         return json_decode($client->getResponse()->getContent(), true);
     }
+
+    public static function deleteCartProductRequest(KernelBrowser $client, int $cartId, int $productId): void
+    {
+        $client->request(
+            Request::METHOD_DELETE,
+            '/api/carts/' . $cartId . '/products/' . $productId,
+        );
+    }
 }

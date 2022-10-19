@@ -68,4 +68,26 @@ class CartTest extends TestCase
         $this->assertEquals(2, $result[1]);
         $this->assertEquals(3, $result[2]);
     }
+
+    public function testRemoveProductWhenProductDoesntExistShouldThrowException(): void
+    {
+        // given
+        $cart = new Cart();
+
+        // when then
+        $this->expectException(\InvalidArgumentException::class);
+        $cart->removeProduct(10);
+    }
+
+    public function testRemoveProductFromCartShouldSucceed(): void
+    {
+        // given
+        $cart = new Cart();
+        $productId = 1;
+        $cart->addProduct($productId, 2);
+
+        // when then
+        $cart->removeProduct($productId);
+        $this->assertCount(0, $cart->getProducts());
+    }
 }

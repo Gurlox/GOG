@@ -8,6 +8,7 @@ use App\Core\Command\CommandBus;
 use App\Core\Query\QueryBus;
 use App\Module\Cart\Application\Command\AddProductToCart\AddProductToCartCommand;
 use App\Module\Cart\Application\Command\CreateCartCommand\CreateCartCommand;
+use App\Module\Cart\Application\Command\RemoveProductFromCart\RemoveProductFromCartCommand;
 use App\Module\Cart\Application\Query\GetCartById\GetCartByIdQuery;
 use Assert\Assert;
 use Assert\InvalidArgumentException;
@@ -107,5 +108,19 @@ class CartController
             ],
             Response::HTTP_OK
         );
+    }
+
+    #[Route('/{cartId}/products/{productId}', name: 'delete_cart_product', methods: ['DELETE'])]
+    /**
+     * @OA\Response(
+     *     response=204,
+     *     description="NO_CONTENT"
+     * )
+     */
+    public function deleteCartProduct(int $cartId, int $productId): JsonResponse
+    {
+        $this->commandBus->handle(new RemoveProductFromCartCommand($cartId, $productId));
+
+        return new JsonResponse([], Response::HTTP_NO_CONTENT);
     }
 }
