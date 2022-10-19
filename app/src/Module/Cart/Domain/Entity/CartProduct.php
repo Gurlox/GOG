@@ -27,11 +27,18 @@ class CartProduct
     private int $quantity;
 
     public function __construct(
+        Cart $cart,
         int $productId,
         int $quantity,
     ) {
+        $this->cart = $cart;
         $this->productId = $productId;
         $this->setQuantity($quantity);
+    }
+
+    public function getId(): int
+    {
+        return $this->id;
     }
 
     public function getCart(): Cart

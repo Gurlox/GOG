@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Tests\unit\Module\Cart\Domain\Entity;
 
 use App\Module\Cart\Domain\Entity\Cart;
+use Assert\InvalidArgumentException;
 use PHPUnit\Framework\TestCase;
 
 class CartTest extends TestCase
@@ -39,6 +40,19 @@ class CartTest extends TestCase
         $this->assertEquals(6, $cart->getProducts()->first()->getQuantity());
     }
 
+    public function testAddProductWhenAlready3ProductsInCartShouldThrowException(): void
+    {
+        // given
+        $cart = new Cart();
+        $cart->addProduct(1, 2);
+        $cart->addProduct(2, 3);
+        $cart->addProduct(3, 3);
+
+        // when then
+        $this->expectException(InvalidArgumentException::class);
+        $cart->addProduct(4, 1);
+    }
+
     public function testGetProductIdsShouldReturnFlatArrayOfIds(): void
     {
         // given
@@ -46,14 +60,12 @@ class CartTest extends TestCase
         $cart->addProduct(1, 2);
         $cart->addProduct(2, 3);
         $cart->addProduct(3, 3);
-        $cart->addProduct(4, 3);
 
         // when then
         $result = $cart->getProductIds();
-        $this->assertCount(4, $result);
+        $this->assertCount(3, $result);
         $this->assertEquals(1, $result[0]);
         $this->assertEquals(2, $result[1]);
         $this->assertEquals(3, $result[2]);
-        $this->assertEquals(4, $result[3]);
     }
 }

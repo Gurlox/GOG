@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Module\Cart\Domain\Entity;
 
+use Assert\Assert;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
@@ -38,9 +39,9 @@ class Cart
         if (null !== $product) {
             $product->addQuantity($quantity);
         } else {
-            $this->products->add(
-                new CartProduct($productId, $quantity),
-            );
+            Assert::that($this->products->count() + 1)->max(3, 'You can add maximum 3 products to cart');
+
+            $this->products->add(new CartProduct($this, $productId, $quantity));
         }
 
         return $this;
@@ -55,6 +56,9 @@ class Cart
         return !$cartProduct ? null : $cartProduct;
     }
 
+    /**
+     * @return Collection<CartProduct>
+     */
     public function getProducts(): Collection
     {
         return $this->products;
