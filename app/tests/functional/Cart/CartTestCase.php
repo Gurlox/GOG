@@ -34,4 +34,14 @@ class CartTestCase
 
         return json_decode($client->getResponse()->getContent(), true);
     }
+
+    public static function getCartRequest(KernelBrowser $client, int $cartId): array
+    {
+        $client->request(
+            Request::METHOD_GET,
+            '/api/carts/' . $cartId,
+        );
+
+        return json_decode($client->getResponse()->getContent(), true);
+    }
 }

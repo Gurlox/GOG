@@ -90,4 +90,22 @@ class CartController
             Response::HTTP_OK
         );
     }
+
+    #[Route('/{id}', name: 'get_cart', methods: ['GET'])]
+    /**
+     * @OA\Response(
+     *     response=200,
+     *     description="OK",
+     *     @Model(type=CartReadDTO::class)
+     * )
+     */
+    public function getCart(int $id): JsonResponse
+    {
+        return new JsonResponse(
+            [
+                'cart' => $this->queryBus->handle(new GetCartByIdQuery($id)),
+            ],
+            Response::HTTP_OK
+        );
+    }
 }
